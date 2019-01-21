@@ -1,0 +1,27 @@
+public with sharing class DealVisualForcePage {
+    TTL_Core__Deal__c deal;
+    
+    public DealVisualForcePage(ApexPages.StandardController controller){
+        this.deal =(TTL_Core__Deal__c)controller.getRecord();
+    }
+    
+    public void DeleteInvoice() {
+        Id InvoiceId = ApexPages.currentPage().getParameters().get('InvoiceId');
+        
+        TTL_Core__Invoice__c invoice = new TTL_Core__Invoice__c(
+            Id = InvoiceId
+        );
+        
+        delete invoice;
+    }
+    
+    public void DeletePayment() {
+        Id PaymentId = ApexPages.currentPage().getParameters().get('PaymentId');
+        
+        Payment__c payment = new Payment__c(
+            Id = PaymentId
+        );
+        
+        delete payment;
+    }
+}

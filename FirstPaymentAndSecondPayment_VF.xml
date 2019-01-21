@@ -1,0 +1,40 @@
+1st Payment
+
+<apex:page standardController="TTL_Core__Deal__c" extensions="PaymentDetail" docType="html-5.0">
+    <apex:form >
+    
+    	<apex:pageBlock title="1st Payment">
+    		 <apex:pageBlockSection >
+        		 <apex:inputField value="{!TTL_Core__Deal__c.X1st_Payment_Expected_Value__c}" label="Amount:"/>
+       			<apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label="Payment Date:"  /> 
+        		<apex:inputField value="{!pay.Invoice__c}" Label="Invoice: "  /> 
+        
+       		 </apex:pageBlockSection>
+    				<apex:pageBlockButtons >
+               			 <apex:commandButton action="{!save}" value="Save"/>
+                        <apex:commandButton action="{!Cancel}" value="Cancel"/>
+            		</apex:pageBlockButtons>
+   		 </apex:pageBlock>
+      </apex:form>  
+</apex:page>
+
+
+2nd Payment
+
+<apex:page standardController="TTL_Core__Deal__c" extensions="Payment2ndDetail" docType="html-5.0">
+    <apex:form >
+    
+    		<apex:pageBlock title="1st Payment">
+     			<apex:pageBlockSection >
+        		 	<apex:inputField value="{!TTL_Core__Deal__c.X2nd_Payment_Expected_Value__c}" label="Amount:"/>
+       				<apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label="Payment Date:"  /> 
+       				 <apex:inputField value="{!pay.Invoice__c}" Label="Invoice: "  /> 
+          
+        		</apex:pageBlockSection>
+    				<apex:pageBlockButtons >
+             		   <apex:commandButton action="{!save}" value="Save"/>
+                        <apex:commandButton action="{!Cancel}" value="Cancel"/>
+           			</apex:pageBlockButtons>
+   			 </apex:pageBlock>
+     </apex:form>  
+</apex:page>

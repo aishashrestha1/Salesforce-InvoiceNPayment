@@ -1,0 +1,62 @@
+@isTest
+public class TestInvoiceClass {
+	 static testmethod  void testMethodForException(){
+       
+
+         TTL_Core__Deal__c deal = new TTL_Core__Deal__c ();
+          deal.Name ='Deal Invoice 1';
+          deal.Pipeline_Status__c='Draft';
+        deal.New_Field_Date__c =System.today();
+          insert deal;
+     
+        
+        
+       	 System.debug('Price after trigger fired: ' + deal.Name);
+			
+	
+        TTL_Core__Invoice__c inv = new TTL_Core__Invoice__c();
+           inv.TTL_Core__Deal__c =deal.Id;
+           
+         inv.TTL_Core__Status__c = deal.Pipeline_Status__c;
+        	insert inv;
+         	 System.debug('Deal Name ' + deal.Name);
+			System.assertEquals('Draft', inv.TTL_Core__Status__c);
+        TTL_Core__Deal__c parent = new TTL_Core__Deal__c(Id = inv.TTL_Core__Deal__c, 
+             
+                                                             X1st_Invoice_Lookup__c=inv.Id);
+          update parent;
+        
+        Test.startTest();
+         
+         PageReference pageRef = Page.DealFirstInvoice; 
+          pageRef.getParameters().put('id', String.valueOf(inv.Id));
+         Test.setCurrentPage(pageRef);
+	    InvoiceDetail testAccPlan =new InvoiceDetail(new ApexPages.StandardController(deal)); 
+         String nextPage = testAccPlan.save().getUrl();
+        
+
+       
+        Test.stopTest();
+         
+         
+
+
+
+
+               
+    }
+    
+          @isTest static void testWarmTemp() {
+     TTL_Core__Deal__c deals = new TTL_Core__Deal__c (Name ='Deal 2');
+              deals.Pipeline_Status__c ='Draft';
+         System.assertEquals('Deal 2',deals.Name); 
+               System.assertEquals('Draft',deals.Pipeline_Status__c); 
+              TTL_Core__Invoice__c invs = new TTL_Core__Invoice__c();
+              invs.TTL_Core__Status__c =deals.Pipeline_Status__c;
+              System.assertEquals('Draft',invs.TTL_Core__Status__c); 
+          
+      }
+    
+    
+    
+}

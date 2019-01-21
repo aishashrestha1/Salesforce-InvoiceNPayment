@@ -1,0 +1,128 @@
+<apex:page standardController="TTL_Core__Deal__c" extensions="DealVisualForcePage">
+
+<script defer="true">
+window.addEventListener('load', () => {
+  const delete_invoice_buttons = document.querySelectorAll('.delete-invoice-button');
+  const delete_payment_buttons = document.querySelectorAll('.delete-payment-button');
+  
+  delete_invoice_buttons.forEach(delete_invoice_button => {
+    delete_invoice_button.addEventListener('click', event => {
+      event.preventDefault();
+      
+      const delete_invoice_button = event.target || event.srcElement;
+      const invoice_id = delete_invoice_button.dataset.id;
+      
+      DeleteInvoice(invoice_id);
+      
+document.location.reload(); 
+
+      delete_invoice_button.style.display = 'none';
+    });
+  });
+  
+  delete_payment_buttons.forEach(delete_payment_button => {
+    delete_payment_button.addEventListener('click', event => {
+      event.preventDefault();
+      
+      const delete_payment_button = event.target || event.srcElement;
+      const payment_id = delete_payment_button.dataset.id;
+      
+      DeletePayment(payment_id);
+      
+      delete_payment_button.style.display = 'none';
+    });
+  });
+});
+</script>
+
+    <apex:form >
+        <apex:pageblock >
+            
+            
+            
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection >
+                    
+                    <apex:commandButton action="{!if(TTL_Core__Deal__c.X1st_Invoice_Lookup__c!=NULL, URLFOR($Action.TTL_Core__Invoice__c.View,TTL_Core__Deal__c.X1st_Invoice_Lookup__c), URLFOR($Action.TTL_Core__Deal__c.X1st_Invoice, Id))}" value="1st Invoice" onclick="this.style.display = 'none'"/>
+                    
+                </apex:pageBlockSection>
+                
+                <apex:pageBlockSection >
+                    <apex:outputField value="{!TTL_Core__Deal__c.X1st_Invoice_Lookup__c}" rendered="FALSE"  label="Lookup ID"/>
+                    
+                    <apex:outputField value="{!TTL_Core__Deal__c.X1st_Invoice_Issue_Date__c}" label="Issue Date:"/>
+                    <apex:outputpanel rendered="{!TTL_Core__Deal__c.X1st_Invoice_Lookup__c != NULL}">
+                    	<button class="delete-invoice-button" data-id="{!TTL_Core__Deal__c.X1st_Invoice_Lookup__c}" style="border-color: #c23934; cursor: pointer; margin-left: 20px; padding: 4px 3px;">Delete</button>
+                    </apex:outputpanel>
+                    
+                </apex:pageBlockSection>
+                
+            </apex:pageBlockSection> 
+            
+            
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection >
+                    
+                    <apex:commandButton action="{!if(TTL_Core__Deal__c.X1st_Payment_Lookup__c!=NULL, URLFOR($Action.Payment__c.View,TTL_Core__Deal__c.X1st_Payment_Lookup__c), URLFOR($Action.TTL_Core__Deal__c.X1stPayment, Id))}" value="1st Payment" onclick="this.style.display = 'none'" 
+                                        rerender="pageMessage"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    
+                    <apex:outputField value="{!TTL_Core__Deal__c.X1st_Payment_Lookup__c}" rendered="FALSE" label="Lookup ID"/>
+                    <apex:outputField value="{!TTL_Core__Deal__c.X1st_Payment_Date__c}" label="Payment Date:"/>
+                    
+                    <apex:outputpanel rendered="{!TTL_Core__Deal__c.X1st_Payment_Lookup__c != NULL}">
+                    	<button class="delete-payment-button" data-id="{!TTL_Core__Deal__c.X1st_Payment_Lookup__c}" style="border-color: #c23934; cursor: pointer; margin-left: 20px; padding: 4px 3px;">Delete</button>
+                    </apex:outputpanel>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection >
+                    <apex:commandButton action="{!if(TTL_Core__Deal__c.X2nd_Invoice_Lookup__c!=NULL, URLFOR($Action.TTL_Core__Invoice__c.View,TTL_Core__Deal__c.X2nd_Invoice_Lookup__c), URLFOR($Action.TTL_Core__Deal__c.X2nd_Invoice, Id))}" value="2nd Invoice" onclick="this.style.display = 'none'" 
+                                        />
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <apex:outputField value="{!TTL_Core__Deal__c.X2nd_Invoice_Lookup__c}" rendered="FALSE" label="Lookup ID"/>
+                    
+                    <apex:outputField value="{!TTL_Core__Deal__c.X2nd_Invoice_Issue_Date__c}" label="Issue Date:"/>
+                    
+                    <apex:outputpanel rendered="{!TTL_Core__Deal__c.X2nd_Invoice_Lookup__c != NULL}">
+                    	<button class="delete-invoice-button" data-id="{!TTL_Core__Deal__c.X2nd_Invoice_Lookup__c}" style="border-color: #c23934; cursor: pointer; margin-left: 20px; padding: 4px 3px;">Delete</button>
+                    </apex:outputpanel>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+            
+            
+            
+            
+            <apex:pageBlockSection columns="2">
+                <apex:pageBlockSection >
+                    <apex:commandButton action="{!if(TTL_Core__Deal__c.X2nd_Payment_Lookup__c!=NULL, URLFOR($Action.Payment__c.View,TTL_Core__Deal__c.X2nd_Payment_Lookup__c), URLFOR($Action.TTL_Core__Deal__c.X2nd_Payment, Id))}" value="2nd Payment" onclick="this.style.display = 'none'" 
+                                        rerender="pageMessage"/>
+                    
+                </apex:pageBlockSection>
+                <apex:pageBlockSection >
+                    <apex:outputField value="{!TTL_Core__Deal__c.X2nd_Payment_Lookup__c}" rendered="FALSE" label="Lookup ID"/>
+                    <apex:outputField value="{!TTL_Core__Deal__c.X2nd_Payment_Date__c}" label="Payment Date:"/>
+                                       
+                     <apex:outputpanel rendered="{!TTL_Core__Deal__c.X2nd_Payment_Lookup__c != NULL}">
+                    	<button class="delete-payment-button" data-id="{!TTL_Core__Deal__c.X2nd_Payment_Lookup__c}" style="border-color: #c23934; cursor: pointer; margin-left: 20px; padding: 4px 3px;">Delete</button>
+                    </apex:outputpanel>
+                </apex:pageBlockSection>
+            </apex:pageBlockSection>
+                      
+        </apex:pageblock>
+        
+        <apex:actionFunction action="{!DeleteInvoice}" name="DeleteInvoice" rerender="null">
+            <apex:param value="" name="InvoiceId"/>
+        </apex:actionFunction>
+        <apex:actionFunction action="{!DeletePayment}" name="DeletePayment" rerender="null">
+            <apex:param value="" name="PaymentId"/>
+        </apex:actionFunction>
+        
+    </apex:form>
+</apex:page>

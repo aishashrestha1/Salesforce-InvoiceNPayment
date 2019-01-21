@@ -1,0 +1,90 @@
+1st Payment
+
+public with sharing class PaymentDetail {
+    TTL_Core__Deal__c deal;
+    public Payment__c pay {get;set;}
+    
+   // public ApexPages.StandardController myInvoiceController {get; set;}
+ //   public TTL_Core__Invoice__c invoice{get; set;}
+  public PaymentDetail(ApexPages.StandardController controller){
+      this.deal =(TTL_Core__Deal__c)controller.getRecord();
+     
+      deal.New_Field_Date__c=system.today();
+    
+ //  invoice = [select id from TTL_Core__Invoice__c];
+
+      pay = new Payment__c();
+   //  myInvoiceController = new ApexPages.StandardController(invoice);
+
+  }
+    
+      public PageReference save(){
+            pay.Deal__c =deal.id;
+       //   pay.Invoice__c =invoice.id;
+            pay.Amount__c =deal.X1st_Payment_Expected_Value__c;
+            pay.Payment_Date__c=deal.New_Field_Date__c;
+            upsert pay;
+           TTL_Core__Deal__c parent = new TTL_Core__Deal__c(Id = pay.Deal__c,
+                                                          X1st_Payment_Lookup__c=pay.id);
+          update parent;
+            PageReference reRendpay = new PageReference('/'+deal.id);
+            reRendpay.setRedirect(true);
+            return reRendpay;
+        
+    }
+    public PageReference Cancel(){   
+                	 PageReference reRend = new PageReference('/'+deal.id);
+                    reRend.setRedirect(true);
+                    return reRend;
+             
+        }
+    
+}
+
+
+
+
+
+
+2nd Payment
+
+public with sharing class Payment2ndDetail {
+    TTL_Core__Deal__c deal;
+    public Payment__c pay {get;set;}
+    
+   // public ApexPages.StandardController myInvoiceController {get; set;}
+ //   public TTL_Core__Invoice__c invoice{get; set;}
+  public Payment2ndDetail(ApexPages.StandardController controller){
+      this.deal =(TTL_Core__Deal__c)controller.getRecord();
+     
+      deal.New_Field_Date__c=system.today();
+    
+ //  invoice = [select id from TTL_Core__Invoice__c];
+
+     pay = new Payment__c();
+   //  myInvoiceController = new ApexPages.StandardController(invoice);
+
+  }
+    
+      public PageReference save(){
+        	pay.Deal__c =deal.id;
+       //   pay.Invoice__c =invoice.id;
+            pay.Amount__c =deal.X2nd_Payment_Expected_Value__c;
+            pay.Payment_Date__c=deal.New_Field_Date__c;
+            upsert pay;
+          TTL_Core__Deal__c parent = new TTL_Core__Deal__c(Id = pay.Deal__c,
+                                                          X2nd_Payment_Lookup__c=pay.id);
+          update parent;
+          	PageReference reRendpay = new PageReference('/'+deal.id);
+            reRendpay.setRedirect(true);
+       		 return reRendpay;
+        
+    }
+    
+    public PageReference Cancel(){   
+                	 PageReference reRend = new PageReference('/'+deal.id);
+                    reRend.setRedirect(true);
+                    return reRend;
+             
+        }
+}

@@ -1,0 +1,226 @@
+
+<apex:page standardController="TTL_Core__Invoice__c" renderAs="pdf" applyBodyTag="false">
+<!--
+renderAs="pdf"
+-->
+<style media="print">
+div.column {
+  display: table-cell;
+  float: left;
+  height: 300px; /* Should be removed. Only for demonstration. */
+  padding: 10px;
+  width: 50%;
+}
+
+/* Clear floats after the columns. */
+
+.row:after {
+  clear: both;
+  content: "";
+  display: table;
+}
+</style>
+
+    <apex:form >
+        <apex:pageBlock >
+            <span style="font-family: sans-serif; font-size: 14pt; text-align: right; margin: 89%;"> INVOICE </span>
+            <div style="width: 100%; height: 5px; background: #203764;"></div>
+            <table style="width: 100%;">
+                <tr>
+                    <td>
+                        <apex:image url="{!$Resource.PublicProperty}" style="float: left; height: 100px;" />
+                    </td>
+                    <th style="color: #203764; font-family: sans-serif; font-size: 11pt; text-align: right;">
+                        BY ELECTRONIC DELIVERY
+                    </th>
+                </tr>
+            </table>
+            <apex:pageBlockSection >
+                <apex:outputText value="{0, date, MM'/'dd'/'yyyy}" style="font-family: sans-serif; font-size: 10.5pt;">
+                    <apex:param value="{!TTL_Core__Invoice__c.TTL_Core__Issue_Date__c}" />
+                </apex:outputText>
+                <br/>
+                <br/>
+                <br/>
+            </apex:pageBlockSection>
+            <!-- <apex:image url="{!$Resource.PublicProperty}" width="100%" height="100%"/>-->
+            <apex:pageBlockSection >
+                
+                <table style="table-layout: fixed; width: 100%;">
+                    <tr>
+                        <th style="width: 50%;">
+                            <span style="font-family: sans-serif; font-size: 11pt; font-weight: bold; color: #203764;">
+                                BILL TO:
+                                <br/><br/>
+                            </span>
+                        </th>
+                        <th>
+                            <span style="font-family: sans-serif; font-size: 11pt; font-weight: bold; color: #203764;">
+                                BILL FROM:
+                                <br/><br/>
+                            </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">{!TTL_Core__Invoice__c.Lessor__r.Name}</span>
+                        </td>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">Scott Powell</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">{!TTL_Core__Invoice__c.Lessor__r.BillingStreet}</span>
+                        </td>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">spowell@ppwashdc.com</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">{!TTL_Core__Invoice__c.Lessor__r.BillingCity + ', ' + TTL_Core__Invoice__c.Lessor__r.BillingState + ' ' + TTL_Core__Invoice__c.Lessor__r.BillingPostalCode}</span>
+                        </td>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">504.265.9109</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;">{!TTL_Core__Invoice__c.Lessor__r.BillingCountry}</span>
+                        </td>
+                        <td style="padding-left: 15px;">
+                            <span style="font-family: sans-serif; font-size: 10.5pt;"></span>
+                        </td>
+                    </tr>
+                </table>
+                
+            </apex:pageBlockSection>
+            <br/>
+            <div style="width: 100%; height: 1px; background: #203764;"></div>
+            <br/>
+            <apex:pageBlockSection >
+                <span style="font-family: sans-serif; font-size: 11pt; font-weight: bold; text-indent: 100%; color: #203764;">
+                    LEASE INFORMATION:
+                    <br/>
+                </span>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection >
+                <div style="font-family: sans-serif; font-size: 10.5pt; margin-left: 15px;">
+                    LOCATION:&nbsp;&nbsp;&nbsp;<apex:outputText value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.TTL_Core__Address_Line_1__c + ', ' + TTL_Core__Invoice__c.TTL_Core__Deal__r.TTL_Core__City__c  + ', '+ TTL_Core__Invoice__c.TTL_Core__Deal__r.State__c}" label="" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                </div>
+                <div style="font-family: sans-serif; font-size: 10.5pt; margin-left: 15px;">
+                    TENANT:&nbsp;&nbsp;&nbsp;<apex:outputText value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.Agency__r.Name}" label="" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                </div>
+                <div style="font-family: sans-serif; font-size: 10.5pt; margin-left: 15px;">
+                    LEASE NUMBER:&nbsp;&nbsp;&nbsp;<apex:outputText value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.Lease_Number__c}" label="" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                </div>
+            </apex:pageBlockSection>
+            <div style="width: 100%; height: 1px; background: #203764;"></div>
+            <br/>
+            <apex:pageBlockSection >
+                <span style="font-family: sans-serif; font-size: 11pt; font-weight: bold; text-indent: 100%; color: #203764;">
+                    RENT/COMMISSION:
+                </span>
+                <br/>
+                <br/>
+            </apex:pageBlockSection>
+            <div style="padding: 15px;">
+                <table style="border-collapse: collapse; table-layout: fixed; width:100%;">
+                    <tr>
+                        <td style="border: 1px solid #203764; border-right:0; font-family: sans-serif; font-size: 10.5pt; font-weight: bold;">
+                            COMMISSION DUE TO PUBLIC PROPERTIES:
+                        </td>
+                        <td style="border: 1px solid #203764; border-left:0; font-family: sans-serif; font-size: 10.5pt; font-weight: bold; text-align: right;">
+                            <apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.Invoice_Total_Commission__c}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="firstpaymentamount" style="border-left: 1px solid #203764;">
+                            <div style="font-size: 10.5pt; font-family: sans-serif; font-style: italic; text-indent: 30px; {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X1st_Invoice_Lookup__c, 'font-weight: bold;', '')}">
+                                {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X1st_Invoice_Lookup__c, '1ST PMT--DUE AT LEASE EXECUTION', '1ST PMT--PAID')}
+                            </div>
+                        </td>
+                        <td style="border-right: 1px solid #203764; font-family: sans-serif; font-style: italic; font-size: 10.5pt; text-align: right; {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X1st_Invoice_Lookup__c, 'font-weight: bold;', '')}">
+                            <apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.X1st_Payment_Expected_Value__c}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-left: 1px solid #203764;">
+                            <div style="font-size: 10.5pt; font-family: sans-serif; font-style: italic; text-indent: 30px; {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X2nd_Invoice_Lookup__c, 'font-weight: bold;', '')}">
+                                {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X2nd_Invoice_Lookup__c, '2ND PMT--DUE AT LEASE COMMENCEMENT', '2ND PMT--DUE AT LEASE COMMENCEMENT')} 
+                            </div>
+                        </td>
+                        <td style="border-right: 1px solid #203764; font-family: sans-serif; font-style: italic; font-size: 10.5pt; text-align: right; {!IF(TTL_Core__Invoice__c.Id = TTL_Core__Invoice__c.TTL_Core__Deal__r.X2nd_Invoice_Lookup__c, 'font-weight: bold;', '')}">
+                            <apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!TTL_Core__Invoice__c.TTL_Core__Deal__r.X2nd_Payment_Expected_Value__c}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background:#203764; border: 1px solid #203764; color:#fff; font-family: sans-serif; font-size: 10.5pt; font-weight: bold;">
+                            TOTAL AMOUNT DUE THIS INVOICE:
+                        </td>
+                        <td style="background:#203764; border: 1px solid #203764; color:#fff; font-family: sans-serif; font-size: 10.5pt; font-weight: bold; text-align: right;">
+                            <apex:outputText value="{0, Number, Currency}">
+                                <apex:param value="{!TTL_Core__Invoice__c.TTL_Core__Total__c}" />
+                            </apex:outputText>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <span style="font-family: sans-serif; font-style: italic; font-size: 10.5pt;">TERMS:  NET 30; 10% LATE FEE PER MONTH</span>
+            </div>
+            <div style="width: 100%; height: 1px; background: #203764;"></div>
+            <br/>
+            <!--Footer-->
+            <span style="color: #203764; font-family: sans-serif; font-size: 11pt; font-weight: bold;">REMITTANCE:</span>
+            <br/><br/>
+            <table>
+                <tr>
+                    <th style="padding-left: 20px; padding-right: 250px; line-height: 32px; width: 36%;">
+                        <span style="color: #203764; font-family: sans-serif; font-size: 10.5pt; text-decoration: underline;">Mail:</span>
+                    </th>
+                    <th style="padding-left: 1px; line-height: 32px; width: 36%;">
+                        <span style="color: #203764; font-family: sans-serif; font-size: 10.5pt; text-decoration: underline;">Wire/ACH:</span>
+                    </th>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px; line-height: 15px; width: 1%;">
+                        <apex:outputtext value="{!TTL_Core__Invoice__c.Issuer__r.Name}" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                    </td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">Eagle Bank</td>
+                </tr>
+                <tr>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 20px; line-height: 15px; width: 1%;">Attention: Accounting</td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">7815 Woodmount Avenue</td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px; line-height: 15px; width: 1%;">
+                        <apex:outputtext value="{!TTL_Core__Invoice__c.Issuer__r.BillingStreet}" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                    </td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">Bethesda, Maryland 20814</td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px; line-height: 15px; width: 1%;">
+                        <apex:outputtext value="{!TTL_Core__Invoice__c.Issuer__r.BillingCity+', '+TTL_Core__Invoice__c.Issuer__r.BillingState+', '+TTL_Core__Invoice__c.Issuer__r.BillingPostalCode }" style="font-family: sans-serif; font-size: 10.5pt;"/>
+                    </td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">Public Properties LLC</td>
+                </tr>
+                <tr>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 20px; line-height: 15px; width: 1%;"></td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">ABA Routing # 055003298</td>
+                </tr>
+                <tr>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 20px; line-height: 15px; width: 1%;"></td>
+                    <td style="font-family: sans-serif; font-size: 10.5pt; padding-left: 1px; line-height: 15px; width: 5%;">Beneficiary Account # 200039428</td>
+                </tr>
+            </table>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>

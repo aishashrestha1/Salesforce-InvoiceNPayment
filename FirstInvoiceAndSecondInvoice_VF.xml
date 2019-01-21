@@ -1,0 +1,190 @@
+1st Invoice
+
+<apex:page standardController="TTL_Core__Deal__c" extensions="InvoiceDetail" docType="html-5.0"> 
+   <apex:form >
+    	<apex:pageBlock title="1st Invoice">
+    		 <apex:pageBlockSection columns="2">
+       			 <apex:pageBlock title="Sender Details:" >
+               		  <apex:pageBlockSection >
+            			<div class="header">
+		   					 <left><img src="{!$Resource.PublicProperty}" width="150%" height ="900%"/></left>
+						</div>
+                 	 </apex:pageBlockSection>
+             				 <apex:pageBlockSection > 
+                         	 </apex:pageBlockSection> 
+                         <apex:pageBlockSection >
+                          <!-- <apex:outputField value="{!PursuitChild.TTL_Core__Deal__c.Name}"/>   -->
+                         <apex:pageBlockSection >
+                             
+                             <apex:inputField value="{!inv.Issuer__c}" id="Account" Label="FROM : "  /> 
+                             <apex:inputField value="{!inv.TTL_Core__Deal__c}"  rendered="FALSE"   />   
+                        <script> 
+   						 document.querySelector('[id$=Account]').value = 'Public Properties';
+						</script> 
+                             </apex:pageBlockSection>
+                         </apex:pageBlockSection>
+         		 </apex:pageBlock>
+        
+         <apex:pageBlock title="Recipient Details:">
+         	<apex:pageBlockSection >
+              <apex:outputtext value="{!TTL_Core__Deal__c.Lessor__r.Name}" label="Customer Name" />
+                   
+            </apex:pageBlockSection>               
+          </apex:pageBlock>
+            
+    
+              
+    	<apex:pageBlock title="Item Description">
+                <apex:pageBlockSection columns="4">
+                  	   <apex:outputField value="{!TTL_Core__Deal__c.Name}"/> 
+                 
+					<!--  <apex:outputText value="{0,date}">
+                          Date: <s/><apex:param value="{!Today}" />
+					</apex:outputText>    -->   		
+                   	 <apex:outputField value="{!TTL_Core__Deal__c.X1st_Payment_Expected_Value__c}" label="Amount:"/>
+                    Date:
+                    	<apex:pageBlockSectionItem >
+                  <!--   <apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label ="Issued Date/"/> -->
+                      		 <apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label="Issued Date:"  /> 
+                  <!--  Date:<apex:input type="date" value="{!x_date}"/> -->
+                     
+	                   </apex:pageBlockSectionItem>
+                    <div align ="right">
+                        
+                    
+                     <apex:pageBlockSectionItem >
+   					Due Date: <apex:outputField value="{!TTL_Core__Deal__c.X1st_PMT_Expected__c}" label="Due Date"/> 
+    
+                      </apex:pageBlockSectionItem> 
+                        </div>
+                    
+       			 </apex:pageBlockSection>
+        
+           </apex:pageBlock>
+                 
+    
+   
+    
+    
+    
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="2">
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="Status"/>
+            </apex:pageblockSectionItem>        
+            		<apex:pageblockSectionItem >
+               <apex:inputField value="{!TTL_Core__Deal__c.Pipeline_Status__c}" id="accountStatus"  />   
+                <script> 
+   			 document.querySelector('[id$=accountStatus]').value = 'Draft';
+			</script> 
+           			 </apex:pageblockSectionItem>  
+        </apex:pageBlockSection>          
+    </apex:pageBlock>
+  				</apex:pageBlockSection>
+           <!--  <apex:pageblock >
+      			  <apex:actionStatus id="disablebtn">
+     				<apex:facet name="stop">     
+         				  <apex:commandButton action="{!save}" status="disablebtn" value="Save" disabled="false"     rerender="mySaveStatus"/>     
+    				 </apex:facet>     
+     			  	<apex:facet name="start">
+     				 <apex:commandButton action="{!save}" status="disablebtn" value="Processing..." disabled="true"/>                  </apex:facet>
+			 </apex:actionStatus>
+			</apex:pageblock>-->
+            
+             					 <apex:pageBlockButtons >
+              							  <apex:commandButton action="{!save}" value="Save"/>
+                                     <apex:commandButton action="{!Cancel}" value="Cancel"/>
+             					</apex:pageBlockButtons> 
+                  
+
+             </apex:pageBlock>
+	</apex:form>
+</apex:page>
+
+2nd Invoice
+
+<apex:page standardController="TTL_Core__Deal__c" extensions="InvoiceDetail2" docType="html-5.0"> 
+   <apex:form >
+         <apex:pageBlock title="2nd Invoice">
+    		 <apex:pageBlockSection columns="2">
+       			 <apex:pageBlock title="Sender Details:" >
+               		  <apex:pageBlockSection >
+            			<div class="header">
+		   					<left><img src="{!$Resource.PublicProperty}" width="150%" height ="900%"/></left>
+						</div>
+                     </apex:pageBlockSection>
+             				 <apex:pageBlockSection > 
+                         	 </apex:pageBlockSection> 
+                         <apex:pageBlockSection >
+                          <!-- <apex:outputField value="{!PursuitChild.TTL_Core__Deal__c.Name}"/>   -->
+                         <apex:pageBlockSection >
+                             
+                             <apex:inputField value="{!inv.Issuer__c}" id="Account" Label="FROM : "  /> 
+                             <apex:inputField value="{!inv.TTL_Core__Deal__c}"  rendered="FALSE"   />   
+                        <script> 
+   						 document.querySelector('[id$=Account]').value = 'Public Properties';
+						</script> 
+                             </apex:pageBlockSection>
+                         </apex:pageBlockSection>
+         		 </apex:pageBlock>
+        
+         <apex:pageBlock title="Recipient Details:">
+         	<apex:pageBlockSection >
+              	<apex:outputtext value="{!TTL_Core__Deal__c.Lessor__r.Name}" label="Customer Name" />
+            </apex:pageBlockSection>               
+         </apex:pageBlock>
+            
+    
+              
+    <apex:pageBlock title="Item Description">
+                <apex:pageBlockSection columns="4">
+                    <apex:outputField value="{!TTL_Core__Deal__c.Name}"/> 
+                   <!--  <apex:outputText value="{0,date}">
+                          Date: <s/><apex:param value="{!Today}" />
+					</apex:outputText>    -->   		
+                    <apex:outputField value="{!TTL_Core__Deal__c.X2nd_Payment_Expected_Value__c}" label="Amount:"/>
+                    
+                  Date:
+                 <apex:pageBlockSectionItem >
+                  <!--   <apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label ="Issued Date/"/> -->
+                     <apex:inputField value="{!TTL_Core__Deal__c.New_Field_Date__c}" Label="Issued Date:"  /> 
+                  <!--  Date:<apex:input type="date" value="{!x_date}"/> -->
+                     
+                  </apex:pageBlockSectionItem>
+                    <div align ="right">
+                        
+                    
+                     			<apex:pageBlockSectionItem >
+   						
+                         			Due Date: <apex:outputField value="{!TTL_Core__Deal__c.X2nd_PMT_Expected__c}" label="Due Date"/> 
+    
+                    			 </apex:pageBlockSectionItem> 
+                       </div>
+                  </apex:pageBlockSection>
+        
+         </apex:pageBlock>
+        
+    <apex:pageBlock >
+        <apex:pageBlockSection columns="2">
+            <apex:pageblockSectionItem >
+                <apex:outputLabel value="Status"/>
+            </apex:pageblockSectionItem>        
+            		<apex:pageblockSectionItem >
+               			<apex:inputField value="{!TTL_Core__Deal__c.Pipeline_Status__c}" id="accountStatus"  />   
+              			 <script> 
+   			 			document.querySelector('[id$=accountStatus]').value = 'Draft';
+						</script> 
+           			 </apex:pageblockSectionItem>  
+         </apex:pageBlockSection>          
+    </apex:pageBlock>
+               </apex:pageBlockSection>
+            		  <apex:pageBlockButtons >
+              			  <apex:commandButton action="{!save}" value="Save"/>
+                          <apex:commandButton action="{!Cancel}" value="Cancel"/>
+           			 </apex:pageBlockButtons> 
+                  
+
+        </apex:pageBlock>
+	</apex:form>
+</apex:page>
+
