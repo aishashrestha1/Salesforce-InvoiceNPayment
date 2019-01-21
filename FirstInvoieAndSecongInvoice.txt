@@ -1,0 +1,126 @@
+Invoice 1st
+
+public with sharing class InvoiceDetail{
+ 	public TTL_Core__Deal__c deal{get;set;}
+     public TTL_Core__Invoice__c inv{get;set;}
+    
+    public Date x_date    {get;set;}
+    public Date Today1 { set {  Date.today(); }}
+    public TTL_Core__Invoice_Line_Item__c child{get;set;}
+
+
+    
+    public InvoiceDetail(ApexPages.StandardController controller){
+	this.deal =(TTL_Core__Deal__c)controller.getRecord();
+     
+		inv =new TTL_Core__Invoice__c();
+        deal.New_Field_Date__c=system.today();
+        Inv.TTL_Core__Issue_Date__c=system.today();
+     
+        }
+        public PageReference save(){
+            
+           inv.TTL_Core__Deal__c =deal.Id;
+           inv.TTL_Core__Status__c = deal.Pipeline_Status__c;
+           inv.Lessor__c =deal.Lessor__c;
+          	inv.TTL_Core__Issue_Date__c =deal.New_Field_Date__c;
+            inv.TTL_Core__Payment_Terms__c='Net 30 Days';
+          
+            upsert inv;
+           TTL_Core__Deal__c parent = new TTL_Core__Deal__c(Id = inv.TTL_Core__Deal__c, 
+             
+                                                             X1st_Invoice_Lookup__c=inv.Id);
+          update parent;
+            //Pair with Invoice Line Item
+            child =new TTL_Core__Invoice_Line_Item__c();
+            child.TTL_Core__Invoice__c =inv.Id;
+            child.TTL_Core__Cost__c =deal.X1st_Payment_Expected_Value__c;
+            child.TTL_Core__Date__c =deal.X1st_PMT_Expected__c;
+            child.TTL_Core__Description__c=deal.Name;
+            upsert child;
+            
+            
+
+			
+            
+            		 PageReference reRend = new PageReference('/'+inv.id);
+                    reRend.setRedirect(true);
+                    return reRend;
+             
+        }
+    
+  
+			public PageReference Cancel(){   
+                	 PageReference reRend = new PageReference('/'+deal.id);
+                    reRend.setRedirect(true);
+                    return reRend;
+             
+        }
+
+    }
+	
+	public with sharing class InvoiceDetail2{
+  TTL_Core__Deal__c deal;
+    public TTL_Core__Invoice__c inv{get;set;}
+    
+    public Date x_date    {get;set;}
+    // public Date Today { get { return Date.today(); }}
+    public Date Today1 { set {  Date.today(); }}
+     public TTL_Core__Invoice_Line_Item__c child{get;set;}
+	
+    public InvoiceDetail2(ApexPages.StandardController controller){
+	this.deal =(TTL_Core__Deal__c)controller.getRecord();
+      //  PursuitChild=(TTL_Core__Invoice__c)controller.getRecord();
+		inv =new TTL_Core__Invoice__c();
+        deal.New_Field_Date__c=system.today();
+        Inv.TTL_Core__Issue_Date__c=system.today();
+     
+        //String oppid = (PursuitChild.TTL_Core__Deal__c);
+    }
+        public PageReference save(){
+           inv.TTL_Core__Deal__c =deal.Id;
+           inv.TTL_Core__Status__c = deal.Pipeline_Status__c;
+           inv.Lessor__c =deal.Lessor__c;
+          
+            inv.TTL_Core__Payment_Terms__c='Net 30 Days';
+          //	inv.TTL_Core__Note_To_Client__c =deal.TTL_Core__Description__c;
+        	inv.TTL_Core__Issue_Date__c =deal.New_Field_Date__c;
+            upsert inv;
+            TTL_Core__Deal__c parent = new TTL_Core__Deal__c(Id = inv.TTL_Core__Deal__c, 
+                                                           X2nd_Invoice_Lookup__c=inv.id);
+          update parent;
+            //Pair with Invoice Line Item object
+            child =new TTL_Core__Invoice_Line_Item__c();
+            child.TTL_Core__Invoice__c =inv.Id;
+            child.TTL_Core__Cost__c =deal.X2nd_Payment_Expected_Value__c;
+            child.TTL_Core__Date__c =deal.X2nd_PMT_Expected__c;
+            child.TTL_Core__Description__c=deal.Name;
+            upsert child;
+            
+            
+             PageReference reRend = new PageReference('/'+inv.id);
+             reRend.setRedirect(true);
+       		 return reRend;
+             
+        }
+    
+  			public PageReference Cancel(){   
+                	 PageReference reRend = new PageReference('/'+deal.id);
+                    reRend.setRedirect(true);
+                    return reRend;
+             
+        }
+    
+
+    }
+
+    
+    // Private Id accID;
+   // public List<TTL_Core__Deal__c> myA {get;set;}
+   // public InvoiceDetail(){
+   //     myA = new List<TTL_Core__Deal__c>(); 
+    //    accID=  ApexPages.currentPage().getParameters().get('acId');
+    //  myA = [Select id,OwnerId,TTL_Core__Client_Contact__c From TTL_Core__Deal__c where id =:accID];
+    //}
+
+
